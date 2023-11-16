@@ -154,7 +154,7 @@ public class Game {
             if (player.isLegitimate()) continue;
 
             ArrayList<PlayerAction> historyCheating = player.getHistoryCheating();
-            PlayerAction firstCheatingInstance = historyCheating.get(historyCheating.size() - 1);
+            PlayerAction firstCheatingInstance = historyCheating.get(0);
 
             String action = String.valueOf(firstCheatingInstance.action);
             String coin = String.valueOf(firstCheatingInstance.coin);
