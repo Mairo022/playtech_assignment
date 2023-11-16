@@ -76,8 +76,8 @@ public class Game {
                 }
 
                 if (isWin(result.toString(), side)) {
-                    int coinsCasino = coinsCasino(result, rateA, rateB, coin);
                     int coinsWonPlayer = coinsWonPlayer(result, rateA, rateB, coin);
+                    int coinsCasino = coin - coinsWonPlayer;
 
                     casino.deposit(coinsCasino);
                     player.deposit(coinsWonPlayer);
@@ -170,24 +170,6 @@ public class Game {
     private void markAsCheater(PlayerRecord player, PlayerAction playerAction) {
         player.setIsLegitimate(false);
         player.addMatchCheating(playerAction);
-    }
-
-    private int coinsCasino(Result result, BigDecimal rateA, BigDecimal rateB, int betAmount) {
-        if (result == Result.A && rateA.compareTo(new BigDecimal("1")) < 0) {
-            BigDecimal casinoRate = new BigDecimal("1").subtract(rateA);
-            BigDecimal coinsWon = casinoRate.multiply(BigDecimal.valueOf(betAmount)).setScale(0, 1);
-
-            return coinsWon.intValue();
-        }
-
-        if (result == Result.B && rateB.compareTo(new BigDecimal("1")) < 0) {
-            BigDecimal casinoRate = new BigDecimal("1").subtract(rateB);
-            BigDecimal coinsWon = casinoRate.multiply(BigDecimal.valueOf(betAmount)).setScale(0, 1);
-
-            return coinsWon.intValue();
-        }
-
-        return betAmount;
     }
 
     private int coinsWonPlayer(Result result, BigDecimal rateA, BigDecimal rateB, int betAmount) {
